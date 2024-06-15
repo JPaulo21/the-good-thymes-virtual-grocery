@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Calendar;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "customers")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
