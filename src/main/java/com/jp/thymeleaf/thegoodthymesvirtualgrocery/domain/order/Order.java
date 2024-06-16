@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import java.util.Calendar;
 import java.util.Set;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor
@@ -24,10 +26,11 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar date;
 
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "customer_id",nullable = false)
     private Customer customer;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = LAZY)
     @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_id", nullable = false))
     private Set<OrderLine> orderLines;
 

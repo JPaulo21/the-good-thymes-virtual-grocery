@@ -6,10 +6,13 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Embeddable
 @Data
 public class OrderLine {
 
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
