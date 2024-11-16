@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Grocery</title>
+    <link rel="stylesheet" th:href="@{/webjars/flowbite/2.4.1/dist/flowbite.min.css}">
+    <script th:src="@{/webjars/flowbite/2.4.1/dist/flowbite.min.js}" defer></script>
+    <script type="module" th:src="@{/assets/js/controller/checkout.js}" defer></script>
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+<!--    <script type="module" th:src="@{/assets/js/controller/cart.js}" defer></script>-->
+</head>
+<body>
+    <nav th:insert="~{components/header-no-search :: menu-no-search}"></nav>
+
+    <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+        <form action="#" class="flex flex-col max-w-screen-xl items-center justify-between mx-auto p-5">
+          <!-- phases -->
+            <ol class="items-center flex w-full max-w-4xl p-5 text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base">
+                <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+                  <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
+                    <svg class="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Cart
+                  </span>
+                </li>
+          
+                <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+                  <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
+                    <svg class="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Address
+                  </span>
+                </li>
+          
+                <li class="flex shrink-0 items-center">
+                  <svg class="me-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                  Payment
+                </li>
+            </ol>
+
+            <div class="flex justify-center w-full max-w-2xl max-w-screen-xl items-start p-5" style="column-gap: 6.6rem;">
+                <!-- Resume Order -->
+                <div class="flex flex-col space-y-4">
+                  <div th:each="order : ${orderlines}" class="w-full divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200 dark:divide-gray-700 dark:border-gray-700" style="max-width: 22rem">
+                    <div class="space-y-4 p-6">
+                      <div class="flex items-center gap-6">
+                        <a href="#" class="h-14 w-14 shrink-0">
+                          <img class="h-full w-full dark:hidden" th:src="${order.product.urlImagem}" alt="imac image" />
+                        </a>
+
+                        <a href="#" th:text="${order.product.name}" class="font-medium text-gray-900 hover:underline dark:text-white"> </a>
+                      </div>
+
+                      <div class="flex items-center justify-between gap-4">
+                        <span class="font-medium text-gray-900 dark:text-white">Product ID: <label th:text="${order.product.id}" class="text-sm font-normal text-gray-500 dark:text-gray-400"></label>
+                        </span>
+
+                        <div class="flex items-center justify-end gap-4">
+                          <p th:text="'x' + ${order.amount}" class="text-base font-normal text-gray-900 dark:text-white"></p>
+
+                          <p th:text="'R$' + ${order.purchasePrice}" class="text-xl font-bold leading-tight text-gray-900 dark:text-white"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Address -->
+                <div class="sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
+                    <div class="min-w-0 flex-1 space-y-8">
+                      <div class="space-y-4">
+                        <div class="grid grid-cols-1 gap-y-2">
+                          <div>
+                            <label for="name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Name </label>
+                            <input type="text" id="name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Bonnie Green" required />
+                          </div>
+
+                          <div>
+                            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Phone Number* </label>
+                            <div class="flex items-center">
+                              <button id="dropdown-phone-button-3" data-dropdown-toggle="dropdown-phone-3" class="z-10 inline-flex shrink-0 items-center rounded-s-lg border border-gray-300 bg-gray-100 px-4 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-700" type="button">
+                                <!-- Brazil flag -->
+                                <svg fill="none" aria-hidden="true" class="me-2 h-4 w-4" viewBox="0 0 20 15">
+                                  <!-- Fundo verde -->
+                                  <rect width="20" height="14" fill="#009b3a" />
+                                  <!-- Losango amarelo -->
+                                  <polygon points="10,0 0,7.5 10,15 20,7.5" fill="#ffdf00" />
+                                  <!-- Esfera azul -->
+                                  <circle cx="10" cy="7.5" r="3" fill="#002776" />
+                                  <!-- Faixa branca -->
+                                  <path d="M7 8.5 Q10 7 13 8.5" stroke="#fff" stroke-width="0.5" fill="none" />
+                                </svg>
+                                +55
+                              </button>
+                              <div class="relative w-full">
+                                <input type="text" id="phone-input" class="z-20 block w-full rounded-e-lg border border-s-0 border-gray-300 bg-g  ray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:border-s-gray-700  dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500" pattern="([0-9]{2}) [0-9]{5}-[0-9]{4}" placeholder="(99) 99999-9999" required />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div>
+                            <label for="zipCode" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> CEP </label>
+                            <input type="text" id="zipCode" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Bonnie Green" required />
+                          </div>
+
+                          <div id="address_number" class="flex gap-x-4">
+                            <div>
+                              <label for="address" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Endereço* </label>
+                              <input type="text" id="address" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Endereço" required />
+                            </div>
+
+                            <div class="w-16">
+                              <label for="number" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Nº </label>
+                              <input type="text" id="number" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="123" />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label for="city" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Cidade* </label>
+                            <input type="text" id="city" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="name@flowbite.com" required />
+                          </div>
+
+                          <div>
+                            <label for="state" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Estado* </label>
+                            <input type="text" id="state" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="name@flowbite.com" required />
+                          </div>
+
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Payment -->
+                <div id="accordion-nested-parent" data-accordion="collapse">
+                    <!-- Icon Credit Card-->
+                    <div style="min-width: 20rem;">
+                        <h2 id="accordion-flush-heading-1">
+                            <button type="button" class="flex w-full justify-between py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3">
+                                <div class="flex">
+                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="42" height="24" fill="none" viewBox="0 0 24 24" style="width: 52;">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M6 14h2m3 0h5M3 7v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1Z"/>
+                                    </svg>
+                                    <span>Cartão de Crédito</span>
+                                </div>
+                                <input id="default-radio-1" type="radio" checked name="default-radio" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            </button>
+                        </h2>
+                    </div>
+                    <!-- Credit Card-->
+                    <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
+                        <div class="max-w-22 py-5 border-b border-gray-200 dark:border-gray-700" style="max-width: 21rem;">
+                            <div class="flex flex-col sm:mt-8 lg:flex lg:items-start lg:gap-12">
+                                <form action="#" class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8">
+                                    <div class="mb-6 grid grid-cols-2 gap-4">
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <label for="full_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Nome completo (conforme exibido no cartão)* </label>
+                                            <input type="text" id="full_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Bonnie Green" required />
+                                        </div>
+
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <label for="card-number-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Card number* </label>
+                                            <input type="text" id="card-number-input" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="xxxx-xxxx-xxxx-xxxx" pattern="^4[0-9]{12}(?:[0-9]{3})?$" required />
+                                        </div>
+
+                                        <div>
+                                            <label for="card-expiration-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Card expiration* </label>
+                                            <div class="relative">
+                                                <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
+                                                    <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                                fill-rule="evenodd"
+                                                                d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                                                                clip-rule="evenodd"
+                                                        />
+                                                    </svg>
+                                                </div>
+                                                <input datepicker datepicker-format="mm/yy" id="card-expiration-input" type="text" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" placeholder="12/23" required />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="cvv-input" class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900 dark:text-white">
+                                                CVV*
+                                                <button data-tooltip-target="cvv-desc" data-tooltip-trigger="hover" class="text-gray-400 hover:text-gray-900 dark:text-gray-500 dark:hover:text-white">
+                                                    <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.408-5.5a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1h-2Z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                                <div id="cvv-desc" role="tooltip" class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700">
+                                                    The last 3 digits on back of card
+                                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                                </div>
+                                            </label>
+                                            <input type="number" id="cvv-input" aria-describedby="helper-text-explanation" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="•••" required />
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Pay now</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Icon Pix -->
+                    <h2 id="accordion-flush-heading-2">
+                      <button type="button" class="flex justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
+                          <div class="flex gap-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="24" fill="none" viewBox="0 0 24 48">
+                                  <path fill="#4db6ac" d="M11.9,12h-0.68l8.04-8.04c2.62-2.61,6.86-2.61,9.48,0L36.78,12H36.1c-1.6,0-3.11,0.62-4.24,1.76	l-6.8,6.77c-0.59,0.59-1.53,0.59-2.12,0l-6.8-6.77C15.01,12.62,13.5,12,11.9,12z"></path>
+                                  <path fill="#4db6ac" d="M36.1,36h0.68l-8.04,8.04c-2.62,2.61-6.86,2.61-9.48,0L11.22,36h0.68c1.6,0,3.11-0.62,4.24-1.76	l6.8-6.77c0.59-0.59,1.53-0.59,2.12,0l6.8,6.77C32.99,35.38,34.5,36,36.1,36z"></path>
+                                  <path fill="#4db6ac" d="M44.04,28.74L38.78,34H36.1c-1.07,0-2.07-0.42-2.83-1.17l-6.8-6.78c-1.36-1.36-3.58-1.36-4.94,0	l-6.8,6.78C13.97,33.58,12.97,34,11.9,34H9.22l-5.26-5.26c-2.61-2.62-2.61-6.86,0-9.48L9.22,14h2.68c1.07,0,2.07,0.42,2.83,1.17	l6.8,6.78c0.68,0.68,1.58,1.02,2.47,1.02s1.79-0.34,2.47-1.02l6.8-6.78C34.03,14.42,35.03,14,36.1,14h2.68l5.26,5.26	C46.65,21.88,46.65,26.12,44.04,28.74z"></path>
+                              </svg>
+                              <span>Pix</span>
+                          </div>
+                          <input id="default-radio-2" type="radio" name="default-radio" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      </button>
+                    </h2>
+                    <!-- Pix -->
+                    <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
+                      <div class="max-w-22 py-5 border-b border-gray-200 dark:border-gray-700" style="max-width: 21rem;">
+                          <p class="mb-2 text-gray-500 dark:text-gray-400">O código Pix gerado para o pagamento é válido por 30 minutos após a finalização do pedido.</p>
+                          <button type="submit" class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                              Pay now
+                          </button>
+                      </div>
+                    </div>
+                    <!-- Icon Boleto -->
+                    <h2 id="accordion-flush-heading-3">
+                      <button type="button" class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
+                          <div class="flex gap-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="width: 52;">
+                                  <!-- Retângulos para representar barras do código de barras -->
+                                  <rect x="2" y="2" width="1" height="20" fill="black" />
+                                  <rect x="4" y="2" width="1" height="20" fill="black" />
+                                  <rect x="6" y="2" width="2" height="20" fill="black" />
+                                  <rect x="9" y="2" width="1" height="20" fill="black" />
+                                  <rect x="11" y="2" width="2" height="20" fill="black" />
+                                  <rect x="14" y="2" width="1" height="20" fill="black" />
+                                  <rect x="16" y="2" width="1" height="20" fill="black" />
+                                  <rect x="18" y="2" width="2" height="20" fill="black" />
+                              </svg>
+
+                              <span>Boleto</span>
+                          </div>
+                          <input id="default-radio-3" type="radio" name="default-radio" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      </button>
+                    </h2>
+                    <!-- Boleto -->
+                    <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
+                        <div class="max-w-22 py-5 border-b border-gray-200 dark:border-gray-700" style="max-width: 21rem;">
+                            <p class="mb-2 text-gray-500 dark:text-gray-400">Boleto será enviado por email</p><button type="submit" class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Pay now</button>
+                            <button type="submit" class="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Pay now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</body>
+</html>

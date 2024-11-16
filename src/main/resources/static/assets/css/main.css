@@ -1,0 +1,7 @@
+.userDropdown {
+    visibility: hidden; 
+}
+    
+.group:hover .userDropdown {
+    visibility: visible; 
+}

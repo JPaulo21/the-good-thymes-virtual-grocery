@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Grocery</title>
+    <link rel="stylesheet" th:href="@{/webjars/flowbite/2.4.1/dist/flowbite.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <script type="module" th:src="@{/assets/js/controller/cart.js}" defer></script>
+</head>
+<body>
+    <nav th:insert="~{components/header-no-search :: menu-no-search}"></nav>
+
+    <section th:insert="~{components/wish-list :: orders}"></section>
+</body>
+</html>
