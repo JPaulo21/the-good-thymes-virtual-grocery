@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <section th:fragment="menu-products" >
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-cols-fr max-w-screen-xl mx-auto px-5 py-3">
+            <div th:each="product : ${products}" th:data-product-id="${product.id}" class="product flex flex-col justify-between w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a th:href="'/product/' + ${product.id}">
+                    <img class="p-8 w-60 h-40 mx-auto cursor-pointer" height="20rem" th:src="${product.urlImagem}" alt="product image" />
+                </a>
+                <div class="px-5 pb-5">
+                    <a th:href="'/product/' + ${product.id}" class="product-link">
+                        <h5 th:text="${product.name}" class="cursor-pointer text-xl font-semibold tracking-tight text-gray-900 dark:text-white"></h5>
+                    </a>
+                    <div class="flex items-center justify-between">
+                        <span th:text="'R$' + ${#numbers.formatDecimal(product.price, 1, 2)}" class="text-3xl font-bold text-gray-900 dark:text-white">R$</span>                            
+                        <button class="add cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
