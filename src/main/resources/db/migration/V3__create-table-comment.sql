@@ -1,0 +1,10 @@
+CREATE TABLE comments (
+  id SERIAL NOT NULL,
+   text VARCHAR(255) NOT NULL,
+   product_id INTEGER NOT NULL,
+   customer_id INTEGER NOT NULL,
+   CONSTRAINT pk_comments PRIMARY KEY (id)
+);
+
+ALTER TABLE comments ADD CONSTRAINT FK_COMMENTS_ON_CUSTOMER FOREIGN KEY (customer_id) REFERENCES customers (id);
+ALTER TABLE comments ADD CONSTRAINT FK_COMMENTS_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES products (id);
