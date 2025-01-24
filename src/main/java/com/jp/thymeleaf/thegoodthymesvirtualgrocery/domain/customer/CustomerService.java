@@ -3,6 +3,7 @@ package com.jp.thymeleaf.thegoodthymesvirtualgrocery.domain.customer;
 import com.jp.thymeleaf.thegoodthymesvirtualgrocery.domain.customer.exceptions.CustomerNotFoundException;
 import com.jp.thymeleaf.thegoodthymesvirtualgrocery.domain.customer.exceptions.EmailAlreadyRegisteredException;
 import com.jp.thymeleaf.thegoodthymesvirtualgrocery.domain.customer.exceptions.InvalidCredentialsCustomerException;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +35,7 @@ public class CustomerService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws InvalidCredentialsCustomerException {
         return customerRepository.findByEmail(login).orElseThrow(
-                () -> new InvalidCredentialsCustomerException("Usuário/Senha inválidos!")
+                () -> new CustomerNotFoundException("Usuário/Senha inválidos!")
         );
     }
 

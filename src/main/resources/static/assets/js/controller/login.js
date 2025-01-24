@@ -13,7 +13,10 @@ formLogin.addEventListener('submit', async (event) => {
             document.body.insertAdjacentHTML('beforeend', notificationService.error("Usuário/Senha inválidos!"));
         });
 
-    if(response.status)
-        window.location.href=response.url;
 
+    if(response.status){
+        const customerLogado = await customerService.getCustomerRegister(loginData.email);
+        localStorage.setItem('customer', JSON.stringify(customerLogado));
+        window.location.href=response.url;
+    }
 });

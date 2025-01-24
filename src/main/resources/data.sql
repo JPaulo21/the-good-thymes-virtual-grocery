@@ -1,7 +1,8 @@
 -- alter table products add column url_imagem varchar2;
 
 insert into customers(cpf, name, password, email, enable, customer_since)
-values ('70486214435', 'João Paulo Lira de Almeida', '$2a$10$qTMLoDgpQO5kHSo9kTSl2ut7CIyTZiYyvd41cBuGv4LmHRiUrlrA.', 'jp.almeida@gmail.com', TRUE, current_date);
+values ('70486214435', 'João Paulo Lira de Almeida', '$2a$10$EJGGmPPTh50h5UQZBuyyo.1IHvBFoAWSanrbI98RvRcyFJqYH3IVu', 'jp.almeida@gmail.com', TRUE, current_date);
+-- 123
 
 insert into products(name, describe, price, in_stock, url_imagem)
 values ('Pão', '', 0.45, TRUE, 'https://cdn.2rscms.com.br/imgcache/5054/uploads/5054/layout/Linha%20Gold%20Paes/pao-frances-12h-gg.png.webp'),
@@ -11,5 +12,7 @@ values ('Pão', '', 0.45, TRUE, 'https://cdn.2rscms.com.br/imgcache/5054/uploads
        ('Presunto', '', 32, TRUE, null),
        ('Leite', '', 27, TRUE, null);
        --('Leite', '', 27, TRUE, 'https://media.istockphoto.com/id/155749055/pt/foto/caixa-de-leite.jpg?s=612x612&w=0&k=20&c=aCdr76mGrBPAtc_kxO5vOUMfbcv_BNmQ808dGtgBl_8=');
+
+insert into comments (text, customer_id, product_id) values ('Ótimo produto!!!', 1, 2);
 
 

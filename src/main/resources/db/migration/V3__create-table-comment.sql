@@ -1,6 +1,7 @@
 CREATE TABLE comments (
   id SERIAL NOT NULL,
    text VARCHAR(255) NOT NULL,
+   date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    product_id INTEGER NOT NULL,
    customer_id INTEGER NOT NULL,
    CONSTRAINT pk_comments PRIMARY KEY (id)

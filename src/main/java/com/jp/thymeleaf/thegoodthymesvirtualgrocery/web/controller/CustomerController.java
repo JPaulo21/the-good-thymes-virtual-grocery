@@ -50,8 +50,8 @@ public class CustomerController {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<CustomerResponseDTO> getCustomerByEmail(@PathVariable("email") String email){
+    @GetMapping
+    public ResponseEntity<CustomerResponseDTO> getCustomerByEmail(@RequestParam(value = "email", required = true) String email){
         Customer customer = customerService.getCustomerByEmail(email);
         CustomerResponseDTO customerResponseDTO = new CustomerResponseDTO(
                 customer.getName(),

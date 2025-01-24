@@ -31,6 +31,8 @@ async function getCustomerRegister(email){
         const body = await response.json();
         throw Error(body.message);
     }
+
+    return await response.json();
 }
 
 async function login(login){
@@ -63,5 +65,6 @@ async function login(login){
 
 export const customerService = {
     create,
-    login
+    login, 
+    getCustomerRegister
 }

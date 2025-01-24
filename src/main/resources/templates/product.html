@@ -9,11 +9,14 @@
     <link rel="stylesheet" th:href="@{/assets/css/main.css}">
     <script th:src="@{/webjars/flowbite/2.4.1/dist/flowbite.min.js}" defer></script>
     <script type="module" th:src="@{/assets/js/controller/product.js}" defer></script>
+    <script type="module" th:src="@{/assets/js/controller/comment.js}" defer></script>
     </style> 
 </head>
 <body>
     <nav th:insert="~{components/header-no-search :: menu-no-search}"></nav>
 
     <section th:insert="~{components/product-overview :: product}">/</section>
+
+    <section th:insert="~{components/comments :: comments}">/</section>
 </body>
 </html>
